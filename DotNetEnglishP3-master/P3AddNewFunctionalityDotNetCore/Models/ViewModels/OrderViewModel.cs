@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using P3.Resources.Models;
+using P3AddNewFunctionalityDotNetCore.Resources.Models;
 
 namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
 {
@@ -13,19 +16,29 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
         [BindNever]
         public ICollection<CartLine> Lines { get; set; }
 
-        [Required(ErrorMessage = "ErrorMissingName")]
+        [Required(
+            ErrorMessageResourceType = typeof(Order),
+            ErrorMessageResourceName = nameof(Order.ErrorMissingName))]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "ErrorMissingAddress")]
+        [Required(
+            ErrorMessageResourceType = typeof(Order),
+            ErrorMessageResourceName = nameof(Order.ErrorMissingAddress))]
         public string Address { get; set; }
 
-        [Required(ErrorMessage = "ErrorMissingCity")]
+        [Required(
+            ErrorMessageResourceType = typeof(Order),
+            ErrorMessageResourceName = nameof(Order.ErrorMissingCity))]
         public string City { get; set; }
 
-        [Required(ErrorMessage = "ErrorMissingZipCode")]
+        [Required(
+            ErrorMessageResourceType = typeof(Order),
+            ErrorMessageResourceName = nameof(Order.ErrorMissingZipCode))]
         public string Zip { get; set; }
 
-        [Required(ErrorMessage = "ErrorMissingCountry")]
+        [Required(
+            ErrorMessageResourceType = typeof(Order),
+            ErrorMessageResourceName = nameof(Order.ErrorMissingCountry))]
         public string Country { get; set; }
 
         [BindNever]

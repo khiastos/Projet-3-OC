@@ -29,14 +29,14 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         }
         public List<ProductViewModel> GetAllProductsViewModel()
         {
-             
+
             IEnumerable<Product> productEntities = GetAllProducts();
             return MapToViewModel(productEntities);
         }
 
         private static List<ProductViewModel> MapToViewModel(IEnumerable<Product> productEntities)
         {
-            List <ProductViewModel> products = new List<ProductViewModel>();
+            List<ProductViewModel> products = new List<ProductViewModel>();
             foreach (Product product in productEntities)
             {
                 products.Add(new ProductViewModel
@@ -85,31 +85,36 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         }
         public void UpdateProductQuantities()
         {
-            Cart cart = (Cart) _cart;
+            Cart cart = (Cart)_cart;
             foreach (CartLine line in cart.Lines)
             {
                 _productRepository.UpdateProductStocks(line.Product.Id, line.Quantity);
             }
         }
 
-        // TODO this is an example method, remove it and perform model validation using data annotations
         public List<string> CheckProductModelErrors(ProductViewModel product)
         {
             var context = new ValidationContext(product);
             var results = new List<ValidationResult>();
 
-            bool isValid = Validator.TryValidateObject(product, context, results, true);
+            Validator.TryValidateObject(product, context, results, true);
 
             var errors = new List<string>();
 
-            foreach (var r in results)
+            foreach (var result in results)
             {
-                if (_localizer != null && _localizer[r.ErrorMessage] is { } localized)
-                    errors.Add(localized);
-                else
-                    errors.Add(r.ErrorMessage);
-            }
+                var rawMessage = result.ErrorMessage;
 
+                if (_localizer != null && rawMessage != null)
+                {
+                    var translated = _localizer[rawMessage];
+                    errors.Add(translated);
+                }
+                else
+                {
+                    errors.Add(rawMessage);
+                }
+            }
             return errors;
         }
 
@@ -120,7 +125,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             var productToAdd = MapToProductEntity(product);
             _productRepository.SaveProduct(productToAdd);
         }
-        
+
         private static Product MapToProductEntity(ProductViewModel product)
         {
             Product productEntity = new Product

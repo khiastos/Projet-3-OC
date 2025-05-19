@@ -21,7 +21,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
         [Required(
             ErrorMessageResourceType = typeof(ProductService),
             ErrorMessageResourceName = nameof(ProductService.MissingStock))]
-        [RegularExpression(@"^\d+$", 
+        [RegularExpression(@"^\d+$",
             ErrorMessageResourceType = typeof(ProductService),
             ErrorMessageResourceName = nameof(ProductService.StockNotAnInteger))]
         [Range(1, int.MaxValue,
@@ -35,6 +35,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
         [RegularExpression(@"^\d+(\.\d{1,2})?$",
             ErrorMessageResourceType = typeof(ProductService),
             ErrorMessageResourceName = nameof(ProductService.PriceNotANumber))]
+
         [Range(1, int.MaxValue,
             ErrorMessageResourceType = typeof(ProductService),
             ErrorMessageResourceName = nameof(ProductService.PriceNotGreaterThanZero))]
