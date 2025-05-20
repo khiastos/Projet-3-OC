@@ -1,4 +1,5 @@
 ﻿@using P3AddNewFunctionalityDotNetCore.Models.ViewModels
+@using System.Globalization
 @model IEnumerable<P3AddNewFunctionalityDotNetCore.Models.ViewModels.ProductViewModel>
 @{
     ViewData["Title"] = Localizer["ProductList"];
@@ -30,7 +31,7 @@
                     <td>@p.Name</td>
                     <td>@p.Description</td>
                     <td style="text-align:center">
-                        @(decimal.TryParse(p.Price, out var prixDecimal) ? prixDecimal.ToString("C") : p.Price)
+                        @decimal.Parse(p.Price, CultureInfo.InvariantCulture).ToString("C")
                     </td>
 
                     <td style="text-align:center">@p.Stock</td>

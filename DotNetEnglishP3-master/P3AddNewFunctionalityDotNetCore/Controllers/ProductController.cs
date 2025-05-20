@@ -10,10 +10,12 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ILanguageService _languageService;
 
         public ProductController(IProductService productService, ILanguageService languageService)
         {
             _productService = productService;
+            _languageService = languageService;
         }
 
         public IActionResult Index()

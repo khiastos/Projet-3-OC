@@ -19,20 +19,20 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         /// </summary>
         public string SetCulture(string language)
         {
-            string culture;
+            string culture = "";
             switch (language)
             {
                 case ("English"):
-                    culture = "en";
+                    culture = "en-US";
                     break;
                 case ("French"):
-                    culture = "fr";
+                    culture = "fr-FR";
                     break;
                 case ("Spanish"):
-                    culture = "es";
+                    culture = "es-ES";
                     break;
                 default:
-                    culture = "en";
+                    culture = "en-ES";
                     break;
             }
             
