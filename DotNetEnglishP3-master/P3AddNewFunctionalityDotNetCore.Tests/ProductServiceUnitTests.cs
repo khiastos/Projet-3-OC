@@ -6,7 +6,7 @@ using Xunit;
 
 namespace P3AddNewFunctionalityDotNetCore.Tests.Unitaire;
 
-public class ProductServiceTests
+public class ProductServiceUnitTests
 {
     private List<ValidationResult> ValidateModel(ProductViewModel model)
     {
@@ -14,6 +14,20 @@ public class ProductServiceTests
         var context = new ValidationContext(model);
         Validator.TryValidateObject(model, context, results, true);
         return results;
+    }
+
+    public bool FindError(List<ValidationResult> results, string error)
+    {
+        bool found = false;
+        foreach (var r in results)
+        {
+            if (r.ErrorMessage == error)
+            {
+                found = true;
+                break;
+            }
+        }
+        return found;
     }
     #region NameTest
     [Fact]
@@ -31,16 +45,7 @@ public class ProductServiceTests
         var results = ValidateModel(model);
 
         // Assert
-        bool found = false;
-
-        foreach (var r in results)
-        {
-            if (r.ErrorMessage == ProductService.MissingName)
-            {
-                found = true;
-                break;
-            }
-        }
+        var found = FindError(results, ProductService.MissingName);
 
         Assert.True(found);
     }
@@ -62,16 +67,7 @@ public class ProductServiceTests
         var results = ValidateModel(model);
 
         // Assert
-        bool found = false;
-
-        foreach (var r in results)
-        {
-            if (r.ErrorMessage == ProductService.MissingPrice)
-            {
-                found = true;
-                break;
-            }
-        }
+        var found = FindError(results, ProductService.MissingPrice);
 
         Assert.True(found);
     }
@@ -91,16 +87,7 @@ public class ProductServiceTests
         var results = ValidateModel(model);
 
         // Assert
-        bool found = false;
-
-        foreach (var r in results)
-        {
-            if (r.ErrorMessage == ProductService.PriceNotANumber)
-            {
-                found = true;
-                break;
-            }
-        }
+        var found = FindError(results, ProductService.PriceNotANumber);
 
         Assert.True(found);
     }
@@ -120,16 +107,7 @@ public class ProductServiceTests
         var results = ValidateModel(model);
 
         // Assert
-        bool found = false;
-
-        foreach (var r in results)
-        {
-            if (r.ErrorMessage == ProductService.PriceNotGreaterThanZero)
-            {
-                found = true;
-                break;
-            }
-        }
+        var found = FindError(results, ProductService.PriceNotGreaterThanZero);
 
         Assert.True(found);
     }
@@ -151,16 +129,7 @@ public class ProductServiceTests
         var results = ValidateModel(model);
 
         // Assert
-        bool found = false;
-
-        foreach (var r in results)
-        {
-            if (r.ErrorMessage == ProductService.MissingStock)
-            {
-                found = true;
-                break;
-            }
-        }
+        var found = FindError(results, ProductService.MissingStock);
 
         Assert.True(found);
     }
@@ -180,16 +149,7 @@ public class ProductServiceTests
         var results = ValidateModel(model);
 
         // Assert
-        bool found = false;
-
-        foreach (var r in results)
-        {
-            if (r.ErrorMessage == ProductService.StockNotAnInteger)
-            {
-                found = true;
-                break;
-            }
-        }
+        var found = FindError(results, ProductService.StockNotAnInteger);
 
         Assert.True(found);
     }
@@ -209,16 +169,7 @@ public class ProductServiceTests
         var results = ValidateModel(model);
 
         // Assert
-        bool found = false;
-
-        foreach (var r in results)
-        {
-            if (r.ErrorMessage == ProductService.StockNotGreaterThanZero)
-            {
-                found = true;
-                break;
-            }
-        }
+        var found = FindError(results, ProductService.StockNotGreaterThanZero);
 
         Assert.True(found);
     }
