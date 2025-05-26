@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
 using P3AddNewFunctionalityDotNetCore.Models.Repositories;
@@ -85,11 +86,25 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
         public void UpdateProductQuantities()
         {
             Cart cart = (Cart)_cart;
-            foreach (CartLine line in cart.Lines)
+            var linesCopy = cart.Lines.ToList();
+
+            foreach (CartLine line in linesCopy)
             {
-                _productRepository.UpdateProductStocks(line.Product.Id, line.Quantity);
+                int productId = line.Product.Id;
+                int quantityToRemove = line.Quantity;
+
+                _productRepository.UpdateProductStocks(productId, quantityToRemove);
+
+                var product = GetProductById(productId);
+                if (product != null && product.Quantity <= 0)
+                {
+                    _cart.RemoveLine(product);
+                    _productRepository.DeleteProduct(productId);
+                }
             }
         }
+
+
 
         public List<string> CheckProductModelErrors(ProductViewModel product)
         {

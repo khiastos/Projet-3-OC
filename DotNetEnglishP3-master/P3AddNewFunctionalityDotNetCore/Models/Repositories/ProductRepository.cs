@@ -56,23 +56,20 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Repositories
         {
             if (product != null)
             {
-               
-
                 _context.Product.Add(product);
                 _context.SaveChanges();
             }
         }
 
-  
-
         public void DeleteProduct(int id)
         {
-            Product product = _context.Product.First(p => p.Id == id);
+            Product product = _context.Product.FirstOrDefault(p => p.Id == id);
             if (product != null)
             {
                 _context.Product.Remove(product);
                 _context.SaveChanges();
             }
+
         }
     }
 }

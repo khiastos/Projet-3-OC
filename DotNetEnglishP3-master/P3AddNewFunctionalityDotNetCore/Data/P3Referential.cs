@@ -2,18 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using P3AddNewFunctionalityDotNetCore.Models.Entities;
+using P3AddNewFunctionalityDotNetCore.Models.ViewModels;
 using System.Data;
 
 namespace P3AddNewFunctionalityDotNetCore.Data
 {
     public class P3Referential : DbContext
     {
+        private ProductViewModel product;
+
         private IDbConnection DbConnection { get; }
 
         public P3Referential(DbContextOptions<P3Referential> options, IConfiguration config)
             : base(options)
         {
             DbConnection = new SqlConnection(config.GetConnectionString("P3Referential"));
+        }
+
+        public P3Referential(ProductViewModel product)
+        {
+            this.product = product;
         }
 
         public virtual DbSet<Order> Order { get; set; }
